@@ -1,38 +1,166 @@
-.App {
-  text-align: center;
+:root {
+  --blue: #2f527b;
+  --lightBlue: #5c62c2;
+  --white: #f2f2f2;
+  --orange: #f9a826;
+  --lightOrange: #f7c376;
+  --success: #60bf88;
+  --danger: #ea8282;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+  font-size: 62.5%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  font-family: "Roboto", sans-serif;
+  background: url("./assets/background.png") no-repeat;
+  background-size: cover;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
 }
 
-.App-link {
-  color: #61dafb;
+.quiz__header {
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.quiz__heading {
+  position: absolute;
+  bottom: 0;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  left: -7em;
+  bottom: 0.5em;
+  min-width: 10em;
+}
+
+.quiz__img {
+  width: 10em;
+  position: absolute;
+  top: -5em;
+  right: -15em;
+}
+
+.quiz__flag img {
+  width: 5em;
+  margin-bottom: 0.35em;
+}
+
+.quiz__body {
+  background: #f2f2f2;
+  width: 30em;
+  /* height: 30em; */
+  border-radius: 2em;
+  border-color: var(--blue);
+  padding: 4em 2em 2em;
+}
+
+.quiz__body header {
+  margin-bottom: 2em;
+}
+
+.quiz__body h2 {
+  color: var(--blue);
+  font-size: 1.5rem;
+}
+.quiz__body .quiz__option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.75em;
+  color: var(--lightBlue);
+  border-radius: 0.5em;
+  border: 1px solid var(--lightBlue);
+  cursor: pointer;
+  background-position: center;
+  transition: background 0.8s;
+}
+
+.quiz__body .quiz__option:not(:last-child) {
+  margin-bottom: 1.2em;
+}
+
+.quiz__body .quiz__option:focus {
+  outline: none;
+}
+
+.quiz__body .quiz__option:hover {
+  background: #f7c376;
+  color: var(--white);
+}
+
+.quiz__body .selected__option {
+  background: var(--orange);
+  color: var(--white);
+  background-size: 100%;
+  transition: background 0s;
+}
+
+.quiz__body .selected__option {
+  display: flex;
+  justify-content: space-between;
+  color: var(--white);
+}
+
+.quiz__body .selected__option--correct {
+  display: flex;
+  justify-content: space-between;
+  background: var(--success);
+  color: var(--white);
+}
+
+.quiz__body .selected__option--none {
+  justify-content: initial;
+}
+
+.quiz__body .selected__option--wrong {
+  display: flex;
+  justify-content: space-between;
+  background: var(--danger);
+  color: var(--white);
+}
+
+/* This is applied to options with close and tick icons */
+
+.quiz__body .quiz__option__title--1 {
+  margin-right: 5em;
+}
+
+.quiz__body .quiz__option__title--2 {
+  margin-right: 3.7em;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 0.75em 1.5em;
+  border: none;
+  display: block;
+  border-radius: 0.5em;
+}
+
+.btn:hover {
+  background: var(--lightOrange);
+}
+
+.btn-next {
+  background: var(--orange);
+  margin-left: auto;
+  margin-top: 1em;
+  color: var(--white);
 }
