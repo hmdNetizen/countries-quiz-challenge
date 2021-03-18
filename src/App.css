@@ -27,7 +27,7 @@ body {
 
 .container {
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -68,7 +68,7 @@ body {
   height: 37em;
   border-radius: 2em;
   border-color: var(--blue);
-  padding: 4em 2em 2em;
+  padding: 3em 2em 2em;
 }
 
 .quiz__body header {

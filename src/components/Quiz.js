@@ -1,9 +1,17 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import quizImg from "../assets/undraw_adventure_4hum 1.svg";
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-const quiz = () => {
+const Quiz = ({ questions }) => {
+  const [isCorrect, setIsCorrect] = useState(false);
+  const handleSelectedAnswer = (value) => {
+    if (value) {
+      alert("You selected the right answer");
+    } else {
+      alert("You selected the wrong answer");
+    }
+  };
   return (
     <Fragment>
       <header className="quiz__header">
@@ -11,34 +19,97 @@ const quiz = () => {
         <img src={quizImg} alt="Quiz" className="quiz__img" />
       </header>
       <section className="quiz__body">
-        <div className="quiz__flag">
-          <img src="https://restcountries.eu/data/afg.svg" alt="flag" />
-        </div>
-        <header>
-          <h2 className="quiz__question">Kuala Lumpur is the capital of</h2>
-        </header>
-        <div className="quiz__answers">
-          <button className="quiz__option selected__option selected__option--wrong">
-            <span>A</span>
-            <span className="quiz__option__title--1"> Vietnam </span>
-            <span className="quiz__option__icon">
-              <i className="far fa-times-circle"></i>
-            </span>
+        {questions.map((question) => (
+          <Fragment key={question.id}>
+            <div className="quiz__flag">
+              <img src="https://restcountries.eu/data/afg.svg" alt="flag" />
+            </div>
+            <header>
+              <h2 className="quiz__question">{question.query}</h2>
+            </header>
+            <div className="quiz__answers">
+              {question.options.map((option, index) => (
+                <button
+                  key={index}
+                  className={`quiz__option ${
+                    option.isCorrect
+                      ? "selected__option--correct"
+                      : "selected__option--wrong"
+                  }}`}
+                  // className="quiz__option selected__option"
+                  onClick={() => {
+                    handleSelectedAnswer(option.isCorrect);
+                  }}
+                >
+                  <span>A</span>
+                  <span className="quiz__option__title--1">
+                    {" "}
+                    {option.answer}
+                  </span>
+                  {option.isCorrect ? (
+                    <span className="quiz__option__icon">
+                      <i className="far fa-check-circle"></i>
+                    </span>
+                  ) : (
+                    <span className="quiz__option__icon">
+                      <i className="far fa-times-circle"></i>
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </Fragment>
+        ))}
+
+        {/*  */}
+
+        {/* <button
+            // className="quiz__option selected__option--none"
+            className={`quiz__option selected__option--none ${
+              questions[0].options[1].isCorrect
+                ? "selected__option--correct"
+                : "selected__option--wrong"
+            }}`}
+            onClick={() =>
+              handleSelectedAnswer(questions[0].options[1].isCorrect)
+            }
+          >
+            <span className="quiz__option__title--2">B</span>{" "}
+            {questions[0].options[1].answer}
           </button>
-          <button className="quiz__option selected__option selected__option--none">
-            <span className="quiz__option__title--2">B</span> Malaysia
+          <button
+            className={`quiz__option selected__option--none ${
+              questions[0].options[2].isCorrect
+                ? "selected__option--correct"
+                : "selected__option--wrong"
+            }}`}
+            onClick={() =>
+              handleSelectedAnswer(questions[0].options[2].isCorrect)
+            }
+          >
+            <span className="quiz__option__title--2">C</span>{" "}
+            {questions[0].options[2].answer}
           </button>
-          <button className="quiz__option">
-            <span className="quiz__option__title--2">C</span> Sweden
-          </button>
-          <button className="quiz__option selected__option selected__option--correct">
+          <button
+            className={`quiz__option selected__option--none ${
+              questions[0].options[3].isCorrect
+                ? "selected__option--correct"
+                : "selected__option--wrong"
+            }}`}
+            onClick={() =>
+              handleSelectedAnswer(questions[0].options[3].isCorrect)
+            }
+          >
             <span>D</span>
-            <span className="quiz__option__title--1"> Austria </span>
+            <span className="quiz__option__title--1">
+              {" "}
+              {questions[0].options[3].answer}{" "}
+            </span>
             <span className="quiz__option__icon">
               <i className="far fa-check-circle"></i>
             </span>
-          </button>
-        </div>
+          </button> */}
+        {/* </div> */}
         <div>
           <Button
             value="Next"
@@ -51,4 +122,8 @@ const quiz = () => {
   );
 };
 
-export default quiz;
+Quiz.propTypes = {
+  questions: PropTypes.array.isRequired,
+};
+
+export default Quiz;
