@@ -4,12 +4,23 @@ import PropTypes from "prop-types";
 import Button from "./Button";
 
 const Quiz = ({ questions }) => {
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(true);
+
   const handleSelectedAnswer = (value) => {
     if (value) {
-      alert("You selected the right answer");
+      console.log("You selected the right answer");
     } else {
-      alert("You selected the wrong answer");
+      console.log("You selected the wrong answer");
+    }
+  };
+
+  const handleSelectedButton = (index) => {
+    if (index) {
+      setIsSelected(true);
+    } else {
+      setIsSelected(false);
     }
   };
   return (
@@ -19,50 +30,57 @@ const Quiz = ({ questions }) => {
         <img src={quizImg} alt="Quiz" className="quiz__img" />
       </header>
       <section className="quiz__body">
-        {questions.map((question) => (
-          <Fragment key={question.id}>
-            <div className="quiz__flag">
-              <img src="https://restcountries.eu/data/afg.svg" alt="flag" />
-            </div>
-            <header>
-              <h2 className="quiz__question">{question.query}</h2>
-            </header>
-            <div className="quiz__answers">
-              {question.options.map((option, index) => (
-                <button
-                  key={index}
-                  className={`quiz__option ${
-                    option.isCorrect
-                      ? "selected__option--correct"
-                      : "selected__option--wrong"
-                  }}`}
-                  // className="quiz__option selected__option"
-                  onClick={() => {
-                    handleSelectedAnswer(option.isCorrect);
-                  }}
-                >
-                  <span>A</span>
-                  <span className="quiz__option__title--1">
-                    {" "}
-                    {option.answer}
+        <Fragment>
+          <div className="quiz__flag">
+            <img src="https://restcountries.eu/data/afg.svg" alt="flag" />
+          </div>
+          <header>
+            <h2 className="quiz__question">
+              {currentQuestion + 1}/{questions.length}
+              {" - "}
+              {questions[currentQuestion].query}
+            </h2>
+          </header>
+          <div className="quiz__answers">
+            {questions[currentQuestion].options.map((option, index) => (
+              <button
+                key={index}
+                className={`quiz__option ${
+                  questions[currentQuestion] === currentQuestion &&
+                  isSelected &&
+                  option.isCorrect
+                    ? "selected__option--correct"
+                    : "selected__option--wrong"
+                }`}
+                // className={`quiz__option ${
+                //   isSelected && questions[currentQuestion].option.isCorrect
+                //     ? "selected__option--correct"
+                //     : isSelected && index === option.id && !option.isCorrect
+                //     ? "selected__option--wrong"
+                //     : "quiz__option"
+                // } `}
+                // className="quiz__option selected__option"
+                onClick={() => {
+                  handleSelectedAnswer(option.isCorrect);
+                  handleSelectedButton(index);
+                }}
+              >
+                <span>A</span>
+                <span className="quiz__option__title--1">{option.answer}</span>
+                {isSelected && option.isCorrect && index === option.id ? (
+                  <span className="quiz__option__icon">
+                    <i className="far fa-check-circle"></i>
                   </span>
-                  {option.isCorrect ? (
-                    <span className="quiz__option__icon">
-                      <i className="far fa-check-circle"></i>
-                    </span>
-                  ) : (
-                    <span className="quiz__option__icon">
-                      <i className="far fa-times-circle"></i>
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </Fragment>
-        ))}
-
+                ) : (
+                  <span className="quiz__option__icon">
+                    <i className="far fa-times-circle"></i>
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </Fragment>
         {/*  */}
-
         {/* <button
             // className="quiz__option selected__option--none"
             className={`quiz__option selected__option--none ${
@@ -110,12 +128,30 @@ const Quiz = ({ questions }) => {
             </span>
           </button> */}
         {/* </div> */}
-        <div>
+        <div className="btn-wrapper">
+          {currentQuestion > 0 && (
+            <Button
+              value="Previous"
+              onClick={() => setCurrentQuestion(currentQuestion - 1)}
+              className="btn btn-previous"
+            />
+          )}
+
           <Button
             value="Next"
-            onClick={() => console.log("Next")}
-            className="btn btn-next"
+            onClick={() => setCurrentQuestion(currentQuestion + 1)}
+            className={`btn btn-next ${
+              currentQuestion + 1 >= questions.length && "btn-hide"
+            }`}
           />
+          {currentQuestion + 1 >= questions.length && (
+            <Button
+              value="Submit"
+              onClick={() => console.log("Quiz Submitted")}
+              className={`btn btn-submit`}
+              disabled={currentQuestion + 1 >= questions.length}
+            />
+          )}
         </div>
       </section>
     </Fragment>
