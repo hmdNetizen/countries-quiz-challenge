@@ -79,71 +79,69 @@ body {
   color: var(--blue);
   font-size: 1.5rem;
 }
-.quiz__body .quiz__option {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 0.75em;
-  color: var(--lightBlue);
-  border-radius: 0.5em;
-  border: 1px solid var(--lightBlue);
-  cursor: pointer;
-  background-position: center;
-  transition: background 0.8s;
+
+.quiz__body .quiz__option__list {
+  list-style-type: none;
 }
 
-.quiz__body .quiz__option:not(:last-child) {
+.quiz__body .quiz__option__listBtn {
+  width: 100%;
+  display: block;
+  text-align: left;
+  padding: 0.75em 1em;
+  border: 1px solid var(--lightBlue);
+  border-radius: 0.5em;
+  cursor: pointer;
+  color: var(--lightBlue);
+  font-size: 1.5rem;
+  position: relative;
+}
+
+.quiz__body .quiz__option__listItem:not(:last-child) {
   margin-bottom: 1.2em;
 }
 
-.quiz__body .quiz__option:focus {
+/* This is pointing to the options' alphabets(A, B, C, D) */
+.quiz__body .quiz__option__listBtn:before {
+  content: attr(data-text);
+  margin-right: 2em;
+}
+
+/* This targetting the actual button */
+.quiz__body .quiz__option__listBtn:active {
+  background: var(--orange);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+.quiz__body .quiz__option__listBtn:focus {
   outline: none;
 }
 
-.quiz__body .quiz__option:hover {
-  background: #f7c376;
-  color: var(--white);
-}
-
-/* .quiz__body .selected__option {
-  background: var(--orange);
-  color: var(--white);
-  background-size: 100%;
-  transition: background 0s;
-} */
-
-.quiz__body .selected__option {
-  display: flex;
-  justify-content: space-between;
-  color: var(--white);
-}
-
-.quiz__body .selected__option--correct {
-  display: flex;
-  justify-content: space-between;
+/* This is applied to options with the correct option selected */
+.quiz__body .quiz__option--correct {
   background: var(--success);
   color: var(--white);
 }
 
-.quiz__body .selected__option--none {
-  justify-content: initial;
+.quiz__body .quiz__option--correct::after {
+  font-family: "Font Awesome 5 Free";
+  content: "\f058";
+  position: absolute;
+  right: 1em;
 }
 
-.quiz__body .selected__option--wrong {
-  display: flex;
-  justify-content: space-between;
+/* This is applied to options with the incorrect option selected */
+.quiz__body .quiz__option--incorrect {
   background: var(--danger);
   color: var(--white);
 }
 
-/* This is applied to options with close and tick icons */
-
-.quiz__body .quiz__option__title--1 {
-  margin-right: 5em;
-}
-
-.quiz__body .quiz__option__title--2 {
-  margin-right: 3.7em;
+.quiz__body .quiz__option--incorrect::after {
+  font-family: "Font Awesome 5 Free";
+  content: "\f057";
+  position: absolute;
+  right: 1em;
 }
 
 .btn-wrapper {
@@ -154,6 +152,7 @@ body {
 .btn {
   cursor: pointer;
   border: none;
+  padding: 0.75em 1.5em;
   display: block;
   border-radius: 0.5em;
 }
